@@ -1,6 +1,13 @@
 import { Wave } from 'react-animated-text';
 
-import { Container, Heading, Loader, RatesList, Section } from 'components';
+import {
+  Container,
+  Filter,
+  Heading,
+  Loader,
+  RatesList,
+  Section,
+} from 'components';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLatestRates } from 'reduxState/operation';
@@ -9,13 +16,14 @@ import {
   selectError,
   selectFilteredRates,
   selectLoading,
+  selectRates,
 } from 'reduxState/selectors';
 
 const Rates = () => {
   const isError = useSelector(selectError);
   const isLoading = useSelector(selectLoading);
   const filteredRates = useSelector(selectFilteredRates);
-
+  const rates = useSelector(selectRates);
   const dispatch = useDispatch();
 
   const baseCurrency = useSelector(selectBaseCurrency);
@@ -38,6 +46,7 @@ const Rates = () => {
             />
           }
         />
+        {rates.length > 0 && <Filter />}
         {filteredRates.length > 0 && <RatesList rates={filteredRates} />}
         {isLoading && <Loader />}
 
